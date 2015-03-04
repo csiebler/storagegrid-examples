@@ -4,7 +4,7 @@ apply plugin: 'eclipse'
 
 sourceCompatibility = 1.7
 version = '1.0'
-mainClassName = "test.Examples"
+mainClassName = "codeexamples.Examples"
 
 // This flag disable SSL Certificate Verification - do not use in production!
 applicationDefaultJvmArgs = ["-Dcom.amazonaws.sdk.disableCertChecking=1"]
