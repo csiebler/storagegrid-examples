@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+version = '1.0'
+mainClassName = "test.Examples"
+
+// This flag disable SSL Certificate Verification - do not use in production!
+applicationDefaultJvmArgs = ["-Dcom.amazonaws.sdk.disableCertChecking=1"]
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.amazonaws:aws-java-sdk-s3:1.9.4'
+    compile 'commons-io:commons-io:2.4'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+

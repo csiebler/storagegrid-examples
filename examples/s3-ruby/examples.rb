@@ -35,6 +35,9 @@ s3.create_bucket(bucket: 'new-bucket')
 # Delete bucket
 s3.delete_bucket(bucket: 'new-bucket')
 
+# Object related operations
+# -------------------------
+
 # Create Object
 s3.put_object(bucket: 'test',
     key: 'my_object',
@@ -52,9 +55,6 @@ list_response.contents.each do |object|
     puts " -> Size: #{object.size} bytes"
     puts " -> Last modified: #{object.last_modified}"
 end
-
-# Object related operations
-# -------------------------
 
 # Get object
 get_response = s3.get_object(bucket: 'test', key: 'my_object')

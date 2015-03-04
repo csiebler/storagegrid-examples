@@ -4,7 +4,7 @@ This repository contains short code examples on how to use NetApp StorageGRID's 
 
 ## Examples
 * S3 via Ruby (AWS SDK for Ruby Version 2)
-* S3 via Java (soon)
+* S3 via Java (AWS SDK for Java)
 * ...
 
 ## Compatibility

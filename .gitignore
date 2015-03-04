@@ -9,6 +9,12 @@
 /test/version_tmp/
 /tmp/
 
+## Java specific ignores
+.gradle/
+.settings/
+.classpath
+.project
+
 ## Specific to RubyMotion:
 .dat*
 .repl_history
