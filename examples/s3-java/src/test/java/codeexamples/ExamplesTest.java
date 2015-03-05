@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -27,18 +29,29 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 public class ExamplesTest {
 
-    // Test configuration
-    final String profile = "my_profile";
-    final String address = "https://10.65.57.176:8082";
-
-    final private AWSCredentialsProvider credentials = new ProfileCredentialsProvider(profile);
     final private S3ClientOptions options = new S3ClientOptions().withPathStyleAccess(true);
     private AmazonS3Client s3;
+
+    private static String address;
+    private static AWSCredentialsProvider credentials;
 
     // Test variables
     final private String testBucket = "testbucket-" + System.currentTimeMillis();
     final private String testContent = "This is my test object's content!";
     final private String testObjectKey = "test_object";
+
+    @BeforeClass
+    public static void loadConfig() throws IOException {
+        // load properties
+        Properties properties = PropertiesLoader.load("config.properties");
+        String profile = properties.getProperty("S3_PROFILE");
+        String hostname = properties.getProperty("HOSTNAME");
+        String port = properties.getProperty("S3_PORT");
+        address = "https://" + hostname + ":" + port;
+
+        // initialize AWS credentials
+        credentials = new ProfileCredentialsProvider(profile);
+    }
 
     @Before
     public void setup() {

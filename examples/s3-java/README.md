@@ -1,5 +1,7 @@
 # Instructions
 
+First, update `src/main/resources/config.properties` and `src/test/resources/config.properties` with your configuration settings. The code examples and the acceptence tests have seperate configuration files.
+
 To execute the code example, first adjust the address of the StorageGRID Webscale API Gateway. Then execute:
 ```
 $ ./gradlew run
