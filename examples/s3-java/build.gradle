@@ -4,10 +4,20 @@ apply plugin: 'eclipse'
 
 sourceCompatibility = 1.7
 version = '1.0'
-mainClassName = "codeexamples.Examples"
+mainClassName = 'codeexamples.Examples'
 
 // This flag disable SSL Certificate Verification - do not use in production!
 applicationDefaultJvmArgs = ["-Dcom.amazonaws.sdk.disableCertChecking=1"]
+
+eclipse {
+    project {
+        name = 'sg-java-example'
+    }
+}
+
+test {
+    jvmArgs '-Dcom.amazonaws.sdk.disableCertChecking=1'
+}
 
 repositories {
     mavenCentral()
@@ -16,6 +26,7 @@ repositories {
 dependencies {
     compile 'com.amazonaws:aws-java-sdk-s3:1.9.4'
     compile 'commons-io:commons-io:2.4'
+    testCompile 'junit:junit:4.11'
 }
 
 task wrapper(type: Wrapper) {
