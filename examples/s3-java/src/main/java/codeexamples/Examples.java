@@ -75,7 +75,9 @@ public class Examples {
         final InputStream inputStream = IOUtils.toInputStream(content, "UTF-8");
         metadata.addUserMetadata("mykey1", "myvalue1");
         metadata.addUserMetadata("mykey2", "myvalue2");
-        s3.putObject("test", "my_object", inputStream, metadata);
+        // encrypt the object if desired
+        metadata.setSSEAlgorithm("AES256");
+        s3.putObject("test", "my_object12", inputStream, metadata);
 
         // List objects
         System.out.println("\nListing objects...");

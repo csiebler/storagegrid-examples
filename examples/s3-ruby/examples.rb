@@ -45,7 +45,9 @@ s3.put_object(bucket: 'test',
         'mykey1' => 'myvalue1',
         'mykey2' => 'myvalue2'
     },
-    body: 'Hello, I\'m the object\'s data!'
+    body: 'Hello, I\'m the object\'s data!',
+    # encrypt object if desired
+    server_side_encryption: 'AES256'
 )
 
 # List objects
