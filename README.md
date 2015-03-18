@@ -3,8 +3,9 @@
 This repository contains short code examples on how to use NetApp StorageGRID Webscale's API endpoints (S3, CDMI).
 
 ## Examples
-* S3 via Ruby (AWS SDK for Ruby Version 2)
-* S3 via Java (AWS SDK for Java)
+* S3 via Ruby (using AWS SDK for Ruby Version 2)
+* S3 via Java (using AWS SDK for Java)
+* S3 Account Management API via Ruby (using rest-client)
 
 More will follow!
 
