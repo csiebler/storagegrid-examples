@@ -1,6 +1,6 @@
 # curl examples
 
-**Please do not use the `--insecure` in production!**
+**Please do not use the `--insecure` option in production!**
 
 ## Authentication
 
@@ -11,7 +11,7 @@ curl -X POST -H "Content-Type: multipart/form-data" \
              --insecure
 ```
 
-Reponse:
+Reponse (`data` contains the authorization bearer token):
 ```
 {  
   "responseTime":"2015-03-19T08:41:06.544Z",
