@@ -5,14 +5,13 @@
 ## Authentication
 
 ```
-curl -X POST -H "Content-Type: multipart/form-data"
-             -F "username=Vendor" -F "password=supersecret"
-             https://10.65.57.175/api/v1/authorize
+curl -X POST -H "Content-Type: multipart/form-data" \
+             -F "username=Vendor" -F "password=supersecret" \
+             https://10.65.57.175/api/v1/authorize \
              --insecure
 ```
 
 Reponse:
-
 ```
 {  
   "responseTime":"2015-03-19T08:41:06.544Z",
@@ -25,9 +24,9 @@ Reponse:
 ## Creating an S3 Account
 
 ```
-curl -X POST -H "Authorization: Bearer $TOKEN" 
-             -d  '{"name":"foobar"}' 
-             https://10.65.57.175/api/v1/service-provider/s3-accounts
+curl -X POST -H "Authorization: Bearer $TOKEN" \
+             -d  '{"name":"foobar"}' \
+             https://10.65.57.175/api/v1/service-provider/s3-accounts \
              --insecure
 ```
 
@@ -49,10 +48,11 @@ Response:
 ## Listing S3 Accounts
 
 ```
-curl -X GET -H "Authorization: Bearer $TOKEN"
-            https://10.65.57.175/api/v1/service-provider/s3-accounts
+curl -X GET -H "Authorization: Bearer $TOKEN" \
+            https://10.65.57.175/api/v1/service-provider/s3-accounts \
             --insecure
 ```
+
 Response:
 ```
 {  
@@ -77,10 +77,11 @@ Response:
 ## Get S3 Account Details
 
 ```
-curl -X GET -H "Authorization: Bearer $TOKEN"
-            https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3
+curl -X GET -H "Authorization: Bearer $TOKEN" \
+            https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3 \
             --insecure
 ```
+
 Response:
 ```
 {  
@@ -98,10 +99,11 @@ Response:
 ## Get S3 Account Usage Details
 
 ```
-curl -X GET -H "Authorization: Bearer $TOKEN" 
-            https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3/usage
+curl -X GET -H "Authorization: Bearer $TOKEN" \
+            https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3/usage \
             --insecure
 ```
+
 Response:
 ```
 {  
@@ -126,11 +128,12 @@ Response:
 ## Update an S3 Account
 
 ```
-curl -X PATCH -H "Authorization: Bearer $TOKEN"
-              -d '{"name":"newfoobar"}'
-              https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3
+curl -X PATCH -H "Authorization: Bearer $TOKEN" \
+              -d '{"name":"newfoobar"}' \
+              https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3 \
               --insecure
 ```
+
 Response:
 ```
 {  
@@ -148,8 +151,11 @@ Response:
 ## Regenerate the access key and access secret key for an S3 Acccount
 
 ```
-curl -X POST -H "Authorization: Bearer $TOKEN" -d '' https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3/regenerate-keys --insecure
+curl -X POST -H "Authorization: Bearer $TOKEN" -d ''
+              https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3/regenerate-keys \
+              --insecure
 ```
+
 Response:
 ```
 {  
@@ -168,10 +174,11 @@ Response:
 ## Delete an S3 Account
 
 ```
-curl -X DELETE -H "Authorization: Bearer $TOKEN"
-               https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3
+curl -X DELETE -H "Authorization: Bearer $TOKEN" \
+               https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3 \
                --insecure
 ```
+
 Response:
 ```
 {  
