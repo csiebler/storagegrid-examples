@@ -151,7 +151,7 @@ Response:
 ## Regenerate the access key and access secret key for an S3 Acccount
 
 ```
-curl -X POST -H "Authorization: Bearer $TOKEN" -d ''
+curl -X POST -H "Authorization: Bearer $TOKEN" -d '' \
               https://10.65.57.175/api/v1/service-provider/s3-accounts/b282236abd3f6f5fc1a79c728c44f11205ecd56499daab04e9879b60dd5cd9c3/regenerate-keys \
               --insecure
 ```
