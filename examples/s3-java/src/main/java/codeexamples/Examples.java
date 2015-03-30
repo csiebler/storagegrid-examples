@@ -77,7 +77,7 @@ public class Examples {
         metadata.addUserMetadata("mykey2", "myvalue2");
         // encrypt the object if desired
         metadata.setSSEAlgorithm("AES256");
-        s3.putObject("test", "my_object12", inputStream, metadata);
+        s3.putObject("test", "my_object", inputStream, metadata);
 
         // List objects
         System.out.println("\nListing objects...");
