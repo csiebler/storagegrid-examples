@@ -4,18 +4,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -26,6 +30,10 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.Owner;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.transfer.Download;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerConfiguration;
+import com.amazonaws.services.s3.transfer.Upload;
 
 public class ExamplesTest {
 
@@ -39,6 +47,9 @@ public class ExamplesTest {
     final private String testBucket = "testbucket-" + System.currentTimeMillis();
     final private String testContent = "This is my test object's content!";
     final private String testObjectKey = "test_object";
+
+    final private File testFile = new File("src/test/resources/testfile");
+    final private File retrievedFile = new File("src/test/resources/testfile.retrieved");
 
     @BeforeClass
     public static void loadConfig() throws IOException {
@@ -64,6 +75,7 @@ public class ExamplesTest {
     @After
     public void cleanup() {
         s3.deleteBucket(testBucket);
+        FileUtils.deleteQuietly(retrievedFile);
     }
 
     @Test
@@ -100,6 +112,31 @@ public class ExamplesTest {
         // Makes sure it returns something
         assertTrue(owner.getDisplayName().length() > 0);
         assertTrue(owner.getId().length() > 24);
+    }
+
+    @Test
+    public void testMultiPartUpload() throws IOException, AmazonServiceException, AmazonClientException,
+        InterruptedException {
+
+        // Setup TransferManager for multi-part uploads (1MB parts for testing)
+        TransferManagerConfiguration c = new TransferManagerConfiguration();
+        c.setMultipartUploadThreshold(1 * 1024 * 12024);
+        TransferManager tm = new TransferManager(s3);
+        tm.setConfiguration(c);
+
+        // Upload object and wait until it is done
+        Upload upload = tm.upload(testBucket, testObjectKey, testFile);
+        upload.waitForCompletion();
+
+        // Download ingested object
+        Download download = tm.download(testBucket, testObjectKey, retrievedFile);
+        download.waitForCompletion();
+
+        // Make sure they are the Same
+        assertTrue(FileUtils.contentEquals(testFile, retrievedFile));
+
+        // Delete the object
+        s3.deleteObject(testBucket, testObjectKey);
     }
 
     @Test

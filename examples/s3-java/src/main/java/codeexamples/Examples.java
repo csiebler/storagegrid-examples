@@ -1,13 +1,17 @@
 package codeexamples;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -18,9 +22,13 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.Owner;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.transfer.Download;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.Upload;
 
 public class Examples {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, AmazonServiceException, AmazonClientException,
+        InterruptedException {
 
         // load properties
         Properties properties = PropertiesLoader.load("config.properties");
@@ -109,5 +117,34 @@ public class Examples {
         System.out.println("\nDeleting object...");
         s3.deleteObject("test", "my_object");
 
+        /*
+         * Object related operations via TransferManager
+         */
+
+        System.out.println("\nSetting up TransferManager...");
+        TransferManager tm = new TransferManager(s3);
+
+        // Upload object and wait until it is done
+        System.out.println("\nUploading file via TransferManager...");
+        File testFile = new File("my_file");
+        FileUtils.write(testFile, "Random content goes here");
+        Upload upload = tm.upload("test", "my_object1", testFile);
+        upload.waitForCompletion();
+        System.out.println(upload.getState());
+
+        // Download ingested object
+        System.out.println("\nDownloading file via TransferManager...");
+        File retrievedFile = new File("retrieved_file");
+        Download download = tm.download("test", "my_object1", retrievedFile);
+        download.waitForCompletion();
+
+        // Delete object and files
+        System.out.println("\nDeleting object...");
+        s3.deleteObject("test", "my_object1");
+        testFile.delete();
+        retrievedFile.delete();
+
+        // Shutdown TransferManager
+        tm.shutdownNow();
     }
 }

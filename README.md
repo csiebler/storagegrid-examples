@@ -6,11 +6,12 @@ This repository contains short code examples on how to use NetApp StorageGRID We
 * S3 via Ruby (using AWS SDK for Ruby Version 2)
 * S3 via Java (using AWS SDK for Java)
 * S3 Account Management API via Ruby (using rest-client)
+* S3 Account Management API via curl
 
 More will follow!
 
 ## Compatibility
-All shown examples are compatible with StorageGRID Webscale 10.1 Beta RC2. For older versions, please switch to the different branches.
+All shown examples are compatible with StorageGRID Webscale 10.1 (GA Release). For older versions, please switch to the different branches.
 
 ## Notes
 This is not an official NetApp repository. NetApp Inc. is not affiliated with the posted examples in any way.
