@@ -4,6 +4,7 @@ This repository contains short code examples on how to use NetApp StorageGRID We
 
 ## Examples
 * S3 via Ruby (using AWS SDK for Ruby Version 2)
+* S3 via Python (using Boto 3)
 * S3 via Java (using AWS SDK for Java)
 * S3 Account Management API via Ruby (using rest-client)
 * S3 Account Management API via curl
