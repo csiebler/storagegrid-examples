@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -30,13 +29,8 @@ public class Examples {
     public static void main(String[] args) throws IOException, AmazonServiceException, AmazonClientException,
         InterruptedException {
 
-        // load properties
-        Properties properties = PropertiesLoader.load("config.properties");
-        final String profile = properties.getProperty("S3_PROFILE");
-        final String hostname = properties.getProperty("HOSTNAME");
-        final String port = properties.getProperty("S3_PORT");
-
-        final String address = "https://" + hostname + ":" + port;
+        final String profile = "my_profile";
+        final String address = "https://10.65.57.176:8082";
 
         final AWSCredentialsProvider credentials = new ProfileCredentialsProvider(profile);
         final S3ClientOptions options = new S3ClientOptions().withPathStyleAccess(true);

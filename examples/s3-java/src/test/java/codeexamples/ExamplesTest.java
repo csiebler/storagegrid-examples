@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -40,7 +39,9 @@ public class ExamplesTest {
     final private S3ClientOptions options = new S3ClientOptions().withPathStyleAccess(true);
     private AmazonS3Client s3;
 
-    private static String address;
+    private static String profile = "my_profile";
+    private static String address = "https://10.65.57.176:8082";
+
     private static AWSCredentialsProvider credentials;
 
     // Test variables
@@ -53,13 +54,6 @@ public class ExamplesTest {
 
     @BeforeClass
     public static void loadConfig() throws IOException {
-        // load properties
-        Properties properties = PropertiesLoader.load("config.properties");
-        String profile = properties.getProperty("S3_PROFILE");
-        String hostname = properties.getProperty("HOSTNAME");
-        String port = properties.getProperty("S3_PORT");
-        address = "https://" + hostname + ":" + port;
-
         // initialize AWS credentials
         credentials = new ProfileCredentialsProvider(profile);
     }
