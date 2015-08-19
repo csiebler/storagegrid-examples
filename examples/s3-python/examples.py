@@ -6,8 +6,9 @@ session = boto3.session.Session(profile_name='my_profile')
 '''
 Do not use this in production - disabling SSL verification is discouraged!
 When using a self-signed certificate, make sure to pass it into the constructor:
-  endpoint = 'https://sg-gw1.mycompany.com:8082'
-  s3 = session.resource(service_name='s3', endpoint_url=endpoint, verify='server_cert.pem')
+
+endpoint = 'https://sg-gw1.mycompany.com:8082'
+s3 = session.resource(service_name='s3', endpoint_url=endpoint, verify='server_cert.pem')
 '''
 
 endpoint = 'https://10.65.57.176:8082'
@@ -33,12 +34,15 @@ Object related operations
 
 # Put a new object to a bucket
 obj = s3.Object('test', 'my-key')
-obj.put(Body='This is my object\'s data')
+obj.put(Body='This is my object\'s data',
+        Metadata={'customerid': '1234', 'location': 'germany'},
+        ServerSideEncryption='AES256')
 
 # Get object from bucket
 response = obj.get()
 data = response['Body'].read()
-print(data)
+metadata = response['Metadata']
+print("Data: %s // Metadata: %s" % (data, metadata))
 
 # List all objects for a bucket
 for obj in s3.Bucket('test').objects.all():
