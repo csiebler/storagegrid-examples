@@ -38,6 +38,10 @@ obj.put(Body='This is my object\'s data',
         Metadata={'customerid': '1234', 'location': 'germany'},
         ServerSideEncryption='AES256')
 
+# Copy an existing object
+copied_obj = s3.Object('test', 'my-copied-key')
+copied_obj.copy_from(CopySource='/test/my-key')
+
 # Get object from bucket
 response = obj.get()
 data = response['Body'].read()

@@ -50,6 +50,12 @@ s3.put_object(bucket: 'test',
     server_side_encryption: 'AES256'
 )
 
+# Copy existing Object
+s3.copy_object(bucket: 'test',
+    key: 'copied_object',
+    copy_source: '/test/my_object'
+)
+
 # List objects
 list_response = s3.list_objects(bucket: 'test')
 list_response.contents.each do |object|
