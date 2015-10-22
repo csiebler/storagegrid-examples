@@ -9,7 +9,7 @@ credentials = Aws::SharedCredentials.new(profile_name: 'my_profile')
 # Set ssl_verfiy_peer to true if StorageGRID's certificate is CA-signed or if you want to use a self-signed certificate
 # If you use a self-signed certificate, set ssl_ca_bundle to the self-signed certificate
 
-s3 = Aws::S3::Client.new(region: 'us-east-1',
+client = Aws::S3::Client.new(region: 'us-east-1',
     endpoint: endpoint,
     credentials: credentials,
     force_path_style: true,
@@ -17,30 +17,29 @@ s3 = Aws::S3::Client.new(region: 'us-east-1',
     #ssl_ca_bundle: 'server_cert.crt'
 )
 
+# Use resource style access
+s3 = Aws::S3::Resource.new(client: client)
+
 # Bucket related operations
 # -------------------------
 
 # List buckets
-list_response = s3.list_buckets
-puts "Bucket Owner Name: #{list_response.owner.display_name}"
-puts "Bucket Owner ID: #{list_response.owner.id}"
-list_response.buckets.each do |bucket|
+s3.buckets.each do |bucket|
     puts "Bucket: #{bucket.name}"
     puts " -> created: #{bucket.creation_date}"
 end
 
 # Create bucket
-s3.create_bucket(bucket: 'new-bucket')
+s3.bucket('new-bucket').create
 
 # Delete bucket
-s3.delete_bucket(bucket: 'new-bucket')
+s3.bucket('new-bucket').delete
 
 # Object related operations
 # -------------------------
 
 # Create Object
-s3.put_object(bucket: 'test',
-    key: 'my_object',
+s3.bucket('test').object('my_object').put(
     metadata: {
         'mykey1' => 'myvalue1',
         'mykey2' => 'myvalue2'
@@ -51,28 +50,28 @@ s3.put_object(bucket: 'test',
 )
 
 # Copy existing Object
-s3.copy_object(bucket: 'test',
-    key: 'copied_object',
-    copy_source: '/test/my_object'
-)
+s3.bucket('test').object('copied_object').copy_from('test/my_object')
 
 # List objects
-list_response = s3.list_objects(bucket: 'test')
-list_response.contents.each do |object|
+s3.bucket('test').objects.each do |object|
     puts "Object key: #{object.key}"
     puts " -> Size: #{object.size} bytes"
     puts " -> Last modified: #{object.last_modified}"
 end
 
 # Get object
-get_response = s3.get_object(bucket: 'test', key: 'my_object')
+get_response = s3.bucket('test').object('my_object').get
 puts "Object content: #{get_response.body.string}"
 
-# Get object metadata
-head_response = s3.head_object(bucket: 'test', key: 'my_object')
-puts "Object metadata: #{head_response.metadata}"
-puts "Object content length: #{head_response.content_length}"
-puts "Object last modified: #{head_response.last_modified}"
+# Get object metadata and size
+metadata = s3.bucket('test').object('my_object').metadata
+size = s3.bucket('test').object('my_object').content_length
+puts "Object metadata: #{metadata}"
+puts "Object content length: #{size}"
+
+# Generate a pre-signed URL that is valid for one hour
+url = s3.bucket('test').object('my_object').presigned_url(:get, expires_in: 3600)
+puts url
 
 # Delete object
-s3.delete_object(bucket: 'test', key: 'my_object')
+s3.bucket('test').object('my_object')
