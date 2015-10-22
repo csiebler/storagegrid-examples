@@ -13,6 +13,7 @@ s3 = session.resource(service_name='s3', endpoint_url=endpoint, verify='server_c
 
 endpoint = 'https://10.65.57.176:8082'
 s3 = session.resource(service_name='s3', endpoint_url=endpoint, verify=False)
+client = s3.meta.client
 
 '''
 Bucket related operations
@@ -51,6 +52,10 @@ print("Data: %s // Metadata: %s" % (data, metadata))
 # List all objects for a bucket
 for obj in s3.Bucket('test').objects.all():
     print(obj.key)
+
+# Generate a pre-signed URL (only possible via client, not directly via Object object)
+url = client.generate_presigned_url('get_object', {'Bucket': 'test', 'Key': 'my-key'}, ExpiresIn=3600)
+print("Pre-signed URL: %s" % (url))
 
 # Delete the object from its bucket
 obj.delete()

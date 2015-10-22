@@ -1,6 +1,6 @@
 # StorageGRID Webscale Code Examples
 
-This repository contains short code examples on how to use NetApp StorageGRID Webscale's API endpoints (S3, CDMI).
+This repository contains short code examples on how to use NetApp StorageGRID Webscale's API endpoints (S3, Swift, CDMI).
 
 ## Examples
 * S3 via Ruby (using AWS SDK for Ruby Version 2)
