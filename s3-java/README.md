@@ -1,7 +1,13 @@
 # Instructions
 
-First, update `src/main/resources/config.properties` and `src/test/resources/config.properties` with your configuration settings. The code examples and the acceptence tests have seperate configuration files.
+First, persist your credentials in `~/.aws/credentials` as described in the AWS best practices for persisting credentials, e.g.,
+```
+user@host::~> cat ~/.aws/credentials
 
+[my_profile]
+aws_access_key_id = 3LXXXXXXXXXXXX
+aws_secret_access_key = nuPXXXXXXXXXXXXXXXXXXXXX
+```
 To execute the code example, first adjust the address of the StorageGRID Webscale API Gateway. Then execute:
 ```
 $ ./gradlew run
