@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.amazonaws:aws-java-sdk-s3:1.9.35'
+    compile 'com.amazonaws:aws-java-sdk-s3:1.10.35'
     compile 'commons-io:commons-io:2.4'
     testCompile 'junit:junit:4.11'
 }
