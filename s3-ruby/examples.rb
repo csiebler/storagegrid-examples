@@ -63,6 +63,12 @@ end
 get_response = s3.bucket('test').object('my_object').get
 puts "Object content: #{get_response.body.string}"
 
+# Get only bytes 15 to 20 of the object
+get_response = s3.bucket('test').object('my_object').get({
+  range: "bytes=15-20"
+})
+puts "Object byte 15-20 content: #{get_response.body.string}"
+
 # Get object metadata and size
 metadata = s3.bucket('test').object('my_object').metadata
 size = s3.bucket('test').object('my_object').content_length
