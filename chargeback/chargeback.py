@@ -2,13 +2,16 @@ import requests
 import json
 import csv
 import time
-from ConfigParser import SafeConfigParser
 from os.path import expanduser
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 # Configuration
 filename = 'usage_stats_' + time.strftime("%Y-%m-%d_%H-%M-%S") + '.csv'
 
-parser = SafeConfigParser()
+parser = configparser.ConfigParser()
 parser.read(expanduser('~') + '/.storagegrid_admin')
 hostname = parser.get('config', 'hostname')
 username = parser.get('config', 'username')
@@ -32,8 +35,8 @@ for _ in accounts:
     name = _['name']  
     req = requests.get(base_url + "/grid/accounts/" + id + "/usage", headers={'Authorization': 'Bearer ' + token}, verify=False)
     usage = req.json()['data']
-    bytes_used = `usage['dataBytes']`
-    objects_used = `usage['objectCount']`
+    bytes_used = str(usage['dataBytes'])
+    objects_used = str(usage['objectCount'])
     stats.append({'name': name, 'id': id, 'bytes_used': bytes_used, 'objects_used': objects_used});
 
 # Write output to csv
