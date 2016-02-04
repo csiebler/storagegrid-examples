@@ -9,6 +9,7 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/chargeback/*.csv
 
 ## Java specific ignores
 .gradle/

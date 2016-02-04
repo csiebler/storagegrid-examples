@@ -13,7 +13,7 @@ This repository contains short code examples on how to use NetApp StorageGRID We
 More will follow!
 
 ## Compatibility
-All shown examples are compatible with StorageGRID Webscale 10.2 (Beta Release). For older versions, please switch to the different branches.
+All shown examples are compatible with StorageGRID Webscale 10.2 (GA Release). For older versions, please switch to the different branches.
 
 ## Notes
 This is not an official NetApp repository. NetApp Inc. is not affiliated with the posted examples in any way.
