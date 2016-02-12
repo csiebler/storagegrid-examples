@@ -39,6 +39,12 @@ obj.put(Body='This is my object\'s data',
         Metadata={'customerid': '1234', 'location': 'germany'},
         ServerSideEncryption='AES256')
 
+# Put object directly from a file
+#obj.upload_file('source-file', ExtraArgs={'Metadata': {'customer_id': '42'}, 'ServerSideEncryption': 'AES256'})
+
+# Get an object directly to a file
+#obj.download_file('target-file')
+
 # Copy an existing object
 copied_obj = s3.Object('test', 'my-copied-key')
 copied_obj.copy_from(CopySource='/test/my-key')
