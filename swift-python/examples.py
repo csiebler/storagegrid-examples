@@ -1,6 +1,6 @@
 import swiftclient
 
-username = '80180975951696906883:swiftadmin'
+username = '11071826158283910917:swiftadmin'
 password = 'supersecret'
 authurl = 'https://10.65.57.176:8083/auth/v1.0'
 
@@ -35,7 +35,10 @@ for c in containers:
     print("Container name: %s (total: %s objects, %s bytes)" % (name, num_objects, size))
 
 # Put object into store
-swift.put_object('test-container', 'test-object', 'This is my object\'s content.')
+swift.put_object('test-container', 'test-object',
+    contents='This is my object\'s content',
+    headers={'X-Object-Meta-CustomerID':'42',
+             'X-Object-Meta-Color':'red'})
 
 # Get object from store
 response = swift.get_object('test-container', 'test-object')
