@@ -40,6 +40,12 @@ swift.put_object('test-container', 'test-object',
     headers={'X-Object-Meta-CustomerID':'42',
              'X-Object-Meta-Color':'red'})
 
+# List contents of a container
+for obj in swift.get_container('test-container')[1]:
+    print "Object key: ", obj['name']
+    print "Object size: ", obj['bytes']
+    print "Object last modified: ", obj['last_modified']
+
 # Get object from store
 response = swift.get_object('test-container', 'test-object')
 object_headers = response[0]
