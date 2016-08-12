@@ -1,8 +1,8 @@
 import swiftclient
 
-username = '11071826158283910917:swiftadmin'
+username = '57347988074919328399:swiftadmin'
 password = 'supersecret'
-authurl = 'https://10.65.57.176:8083/auth/v1.0'
+authurl = 'https://swift.mycompany.com:8083/auth/v1.0'
 
 swift = swiftclient.client.Connection(auth_version='1', user=username, key=password, insecure=True, authurl=authurl)
 
@@ -13,13 +13,16 @@ cacert = '/path/to/server/cert'
 swift = swiftclient.client.Connection(auth_version='1', user=username, key=password, cacert=cacert, authurl=authurl)
 '''
 
-# Get authentication infomration
+container = 'test-container'
+obj_key = 'test-object'
+
+# Get authentication information
 print(swift.get_auth())
 
 # Create container
-swift.put_container('test-container')
+swift.put_container(container)
 
-# List containers and account information
+# List all containers and account information
 response = swift.get_account()
 account_info = response[0]
 containers = response[1]
@@ -34,28 +37,31 @@ for c in containers:
     size = c['bytes']
     print("Container name: %s (total: %s objects, %s bytes)" % (name, num_objects, size))
 
-# Put object into store
-swift.put_object('test-container', 'test-object',
+# Get information of a single container
+response = swift.get_container(container)
+print "Container: ", response
+
+# Put object into container
+swift.put_object(container, obj_key,
     contents='This is my object\'s content',
     headers={'X-Object-Meta-CustomerID':'42',
              'X-Object-Meta-Color':'red'})
 
 # List contents of a container
-for obj in swift.get_container('test-container')[1]:
+for obj in swift.get_container(container)[1]:
     print "Object key: ", obj['name']
     print "Object size: ", obj['bytes']
     print "Object last modified: ", obj['last_modified']
 
-# Get object from store
-response = swift.get_object('test-container', 'test-object')
+# Get object from container
+response = swift.get_object(container, obj_key)
 object_headers = response[0]
 object_content = response[1]
 print "Object headers: ", object_headers
 print "Object content: ", object_content
 
 # Delete object
-swift.delete_object('test-container', 'test-object')
+swift.delete_object(container, obj_key)
 
 # Delete container
-swift.delete_container('test-container')
-
+swift.delete_container(container)
