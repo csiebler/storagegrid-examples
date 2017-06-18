@@ -33,6 +33,16 @@ bucket.Versioning().enable()
 # Get Bucket Versioning status
 print bucket.Versioning().status
 
+# Reference Bucket Policy
+bucket_policy = s3.BucketPolicy('my-bucket')
+
+# Laod Policy from local file and attach it to bucket
+with open('policy.json','r') as f:
+    bucket_policy.put(Policy=f.read())
+
+# Delete current Bucket Policy from bucket
+bucket_policy.delete()
+
 # Delete bucket
 bucket.delete()
 
