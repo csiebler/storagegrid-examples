@@ -36,7 +36,7 @@ print bucket.Versioning().status
 # Reference Bucket Policy
 bucket_policy = s3.BucketPolicy('my-bucket')
 
-# Laod Policy from local file and attach it to bucket
+# Load Policy from local file and attach it to bucket
 with open('policy.json','r') as f:
     bucket_policy.put(Policy=f.read())
 
