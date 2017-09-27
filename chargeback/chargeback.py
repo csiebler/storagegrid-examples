@@ -25,7 +25,7 @@ req = requests.post(base_url + "/authorize", data, verify=False)
 token = json.loads(req.text)['data']
 
 # Get all accounts in the GRID
-req = requests.get(base_url + "/grid/accounts", headers={'Authorization': 'Bearer ' + token}, verify=False)
+req = requests.get(base_url + "/grid/accounts?limit=1000", headers={'Authorization': 'Bearer ' + token}, verify=False)
 accounts = req.json()['data']
 
 # Get usage for all accounts
