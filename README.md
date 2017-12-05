@@ -1,3 +1,5 @@
+__This repository is deprecated, its latest version can be found [here](https://github.com/NetApp/storagegrid-examples)__
+
 # StorageGRID Webscale Code Examples
 
 This repository contains short code examples on how to use NetApp StorageGRID Webscale's API endpoints (S3, Swift).
