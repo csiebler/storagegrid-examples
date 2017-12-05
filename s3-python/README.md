@@ -1,5 +1,12 @@
 # Python Examples for accessing StorageGRID S3
 
+## Prerequisites
+
+First, install the necessary library for S3:
+```
+$ pip install boto3
+```
+
 ## Connecting to StorageGRID S3
 
 For connecting to StorageGRID S3, we first need to load the `boto3` library:
@@ -54,7 +61,7 @@ print s3.Bucket('new-bucket').Versioning().status
 Using Bucket Policies:
 ```python
 # Load Policy from local policy.json file and attach it to bucket
-with open('policy.json','r') as f:
+with open('policy.json', 'r') as f:
     s3.BucketPolicy('my-bucket').put(Policy=f.read())
 ```
 
@@ -85,9 +92,9 @@ Upload/download an object directly from/to a file:
 ```python
 s3.Object('my-bucket', 'object_name.txt').upload_file(
                 '/path/to/source-file',
-                ExtraArgs={'Metadata': {'customer_id': '42'}, 'ServerSideEncryption': 'AES256'})
+                ExtraArgs={'Metadata': {'customer_id': '42'},
+                           'ServerSideEncryption': 'AES256'})
 
-# Get an object directly to a file
 s3.Object('my-bucket', 'object_name.txt').download_file('/path/to/target-file')
 ```
 
@@ -98,7 +105,7 @@ s3.Object('my-bucket', 'copy.txt').copy_from(CopySource='/source-bucket/original
 # Copy a specific version (if version is enabled)
 s3.Object('my-bucket', 'copy.txt').copy_from(
     CopySource={'Bucket': 'source-bucket',
-                'Key': 'original.txt',                          
+                'Key': 'original.txt',                
                 'VersionId': 'Mzc0MzV...DAtMDAwMDAwQkFBNEM2'})
 ```
 
@@ -120,7 +127,9 @@ print("Data: %s // Metadata: %s" % (data, metadata))
 
 Generate a pre-signed URL (only possible via client, not directly via Object object):
 ```python
-url = client.generate_presigned_url('get_object', {'Bucket': 'my-bucket', 'Key': 'object_name.txt'}, ExpiresIn=3600)
+url = client.generate_presigned_url('get_object', 
+                                    {'Bucket': 'my-bucket', 'Key': 'object_name.txt'},
+                                    ExpiresIn=3600)
 print("Pre-signed URL: %s" % (url))
 ```
 
@@ -136,6 +145,6 @@ config = TransferConfig(
     num_download_attempts = 10)
 
 transfer = S3Transfer(client, config)
-transfer.upload_file('/path/to/source/file.zip', 'my-bucket', 'file.zip')
-transfer.download_file('my-bucket', 'file.zip', '/path/to/destination/file.zip')
+transfer.upload_file('/path/to/source/file.zip', 'my-bucket', 'file.zip')
+transfer.download_file('my-bucket', 'file.zip', '/path/to/destination/file.zip')
 ```
