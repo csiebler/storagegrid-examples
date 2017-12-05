@@ -112,8 +112,8 @@ s3.Object('my-bucket', 'copy.txt').copy_from(
 List all objects for a bucket:
 ```python
 for o in s3.Bucket('my-bucket').objects.all():
-    print("Key: " + o.key)
-    print("Size: " + str(o.size))
+    print("Key: " + o.key)
+    print("Size: " + str(o.size))
     print("Time: " + str(o.last_modified)) 
 ```
 
@@ -139,9 +139,9 @@ from boto3.s3.transfer import TransferConfig, S3Transfer
 
 # config if needed
 config = TransferConfig(
-    multipart_threshold = 512 * 1024 * 1024,
-    multipart_chunksize = 512 * 1024 * 1024,
-    max_concurrency = 10,
+    multipart_threshold = 512 * 1024 * 1024,
+    multipart_chunksize = 512 * 1024 * 1024,
+    max_concurrency = 10,
     num_download_attempts = 10)
 
 transfer = S3Transfer(client, config)
