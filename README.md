@@ -10,10 +10,8 @@ This repository contains short code examples on how to use NetApp StorageGRID We
 * Account Management API via Ruby (using rest-client)
 * Account Management API via curl
 
-More will follow!
-
 ## Compatibility
-All shown examples are compatible with StorageGRID Webscale 10.4 (GA Release). For older versions, please switch to the different branches.
+All shown examples are compatible with StorageGRID Webscale 11.0 (GA Release). For older versions, please switch to the different branches.
 
 ## Notes
 This is not an official NetApp repository. NetApp Inc. is not affiliated with the posted examples in any way.
