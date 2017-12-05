@@ -109,12 +109,22 @@ s3.Object('my-bucket', 'copy.txt').copy_from(
                 'VersionId': 'Mzc0MzV...DAtMDAwMDAwQkFBNEM2'})
 ```
 
-List all objects for a bucket:
+List all visible objects in a bucket:
 ```python
 for o in s3.Bucket('my-bucket').objects.all():
     print("Key: " + o.key)
     print("Size: " + str(o.size))
     print("Time: " + str(o.last_modified)) 
+```
+
+List all objects (including versioned objects) in a bucket:
+```python
+for o in s3.Bucket('my-bucket').object_versions.all():
+    print("Key: " + o.key)
+    print("Version: " + o.version_id)
+    print("Size: " + str(o.size))
+    print("Time: " + str(o.last_modified))
+    print("Is latest: " + str(o.is_latest))
 ```
 
 Read object from bucket:
@@ -137,7 +147,6 @@ Multipart Upload via `S3Transfer` helper:
 ```python
 from boto3.s3.transfer import TransferConfig, S3Transfer
 
-# config if needed
 config = TransferConfig(
     multipart_threshold = 512 * 1024 * 1024,
     multipart_chunksize = 512 * 1024 * 1024,
